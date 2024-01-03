@@ -1,12 +1,17 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+ctx.strokeStyle = 'red';
 const img = new Image()
+const textFound = document.querySelector('.text-found')
+const loader = document.querySelector('.loading')
 
-// console.log(fileInput.files[0])
+
 
 
 async function Base64FileReader(selector){
+    
     //This function returns a Base64 encoding of a file. Give the target file input query selector as a parameter
+
     return new Promise((resolve,reject)=>{
 
         const fileInput = document.querySelector(selector)
@@ -20,7 +25,7 @@ async function Base64FileReader(selector){
             }
             else{
             const base64Url = e.target.result
-            console.log(base64Url)
+            // console.log(base64Url)
             resolve(base64Url)
             }
         }
@@ -41,18 +46,26 @@ async function drawImageOnCanvas(input) {
 
         const img = new Image()
         const base64Url = await Base64FileReader(input)
-        
+
         img.onload = function() {
             // Now the image is loaded, and you can access its dimensions
-            console.log(img.width);
-            console.log(img.height);
+
+            // console.log(img.width);
+            // console.log(img.height);
 
             // Set the canvas size and background properties
+
             canvas.style.width = img.width + 'px';
             canvas.style.height = img.height + 'px';
-            canvas.style.backgroundImage = `url(${img.src})`;
-            canvas.style.backgroundSize = 'cover';
-            canvas.style.backgroundPosition = 'center';
+
+            // canvas.style.backgroundImage = `url(${img.src})`;
+            // canvas.style.backgroundSize = 'cover';
+            // canvas.style.backgroundPosition = 'center';
+
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
         };
 
         img.src = base64Url;
@@ -66,6 +79,8 @@ async function drawImageOnCanvas(input) {
 
 
 async function imageToText(){
+
+    loader.style.display = 'block'
     const fileInput = document.querySelector('input')
 
     const imageFile = fileInput.files[0]
@@ -76,13 +91,27 @@ async function imageToText(){
 
     try{
         result = await fetch('https://api.api-ninjas.com/v1/imagetotext',{ method: 'POST', headers: {'X-Api-Key': 'im6UqOHTsLg5q/kQc5vy1Q==8KE0dN3KlXLZLUFc'}, body: formData})
-        console.log("YOYO")
         const jsonResult = await result.json()
+        loader.style.display = 'none'
+
+        // console.log(jsonResult)
+        
+        
+        jsonResult.forEach(element => {
+            ctx.strokeRect(element.bounding_box.x1, element.bounding_box.y1, element.bounding_box.x2 - element.bounding_box.x1, element.bounding_box.y2 - element.bounding_box.y1)
+            textFound.innerHTML += `<p>${element.text}</p>`;
+            
+        });
+
+
     }
     catch(error){
-        console.error(`Happy debuging✌: ${error.error}`)
+        console.error(`Happy debuging✌: ${error}`)
     }
 }
+
+
+
 
 
 

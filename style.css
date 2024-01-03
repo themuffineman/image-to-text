@@ -7,9 +7,78 @@ body{
 }
 *{
     box-sizing: border-box;
+    font-family:"monospace", sans-serif;
 }
 canvas{
-    width: 700px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     border: 1px solid black;
+    transition: all 1s cubic-bezier(.47,1.64,.41,.8);
 }
+div{
+    display: flex;
+    flex-direction:column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+input{
+    width: 100%;
+    height: 30px;
+}
+button{
+    width: 100%;
+    border: none;
+    border-radius: 30px;
+    background-color: bisque;
+    height: 40px;
+}
+button:hover{
+    background-color: azure;
+    border: 1px solid #b48181;
+}
+
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    overflow: hidden;
+    color: #000000;
+    background-color: bisque; 
+    border: 1px solid #2980b9; 
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+.custom-file-input input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px; 
+    cursor: pointer;
+    opacity: 0;
+}
+.text-found{
+    margin-top:30px;
+}
+.loading{
+    border-right: 4px solid black;
+    border-top: 4px solid black;
+    border-bottom: 4px solid white;
+    border-left: 4px solid white;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: white;
+    animation: loading infinite .4s linear;
+    display: none;
+
+}
+@keyframes loading{
+    to{
+        transform: rotate(1turn);
+    }
+}
+

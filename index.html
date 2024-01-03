@@ -6,11 +6,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas></canvas>
-    <input type="file" onchange="drawImageOnCanvas('input')">
-    <button width="20" height="20" onclick="imageToText()" >Submit</button>
+    <div class="wrapper">
+        <canvas></canvas>
+        <label class="custom-file-input">
+            <input type="file" onchange="drawImageOnCanvas('input')">
+            Choose File
+        </label>
+        <button width="20" height="20" onclick="imageToText()" >Submit</button>
+    </div>
 
 
+    <div class="text-found">
+        <h2>The text we found</h2>
+        <div class="loading"></div>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
